@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sku.jaebbom.talent.talentMapper">
+
+
+	<!-- 재능 리스트를 페이징 하여 가져오기 -->
+	<!-- <![CDATA[]]>를 삽입해야 <,> 와 같은 특수 기호를 문제 없이 인식 -->
+	<select id="getTalentList"
+		resultType="com.sku.jaebbom.talent.model.TalentViewVO">
+		SELECT
+		TALENT_NUM, TITLE, CATEGORY1, CATEGORY2, AREA1, AREA2, WRITER, PAY
+		FROM(
+		SELECT
+		RNUM, TALENT_NUM, TITLE, CATEGORY1, CATEGORY2, AREA1, AREA2, WRITER, PAY
+		FROM(
+		SELECT
+		TALENT_NUM, TITLE, CATEGORY1, CATEGORY2, AREA1, AREA2, WRITER, PAY, ROWNUM AS
+		RNUM
+		FROM(
+		SELECT
+		*
+		FROM
+		TALENT_VIEW
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="area1_num!=0">
+				AND AREA1_NUM = #{area1_num}
+			</if>
+			<if test="area2_num!=0">
+				AND AREA2_NUM = #{area2_num}
+			</if>
+			<if test="category1_num!=0">
+				AND CATEGORY1_NUM = #{category1_num}
+			</if>
+			<if test="category2_num!=0">
+				AND CATEGORY2_NUM = #{category2_num}
+			</if>
+			<if
+				test="searchType=='title' and keyword != null and keyword != '' ">
+				AND TITLE LIKE '%' || #{keyword} || '%'
+			</if>
+			<if
+				test="searchType=='content' and keyword != null and keyword != '' ">
+				AND CONTENT LIKE '%' || #{keyword} || '%'
+			</if>
+			<if
+				test="searchType=='writer' and keyword != null and keyword != '' ">
+				AND WRITER LIKE '%' || #{keyword} || '%'
+			</if>
+		</trim>
+		ORDER BY TALENT_NUM DESC
+		)
+		)
+		WHERE
+		RNUM 	<![CDATA[>=]]>
+		#{startList}
+		)
+		WHERE
+		ROWNUM 	<![CDATA[<=]]>
+		#{listSize}
+	</select>
+
+
+
+	<!-- 페이징 위한 등록된 재능 개수 확인 -->
+	<select id="getTalentListCnt" resultType="int">
+		SELECT
+		COUNT(*) AS listCnt
+		FROM
+		TALENT_VIEW
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="area1_num!=0">
+				AND AREA1_NUM = #{area1_num}
+			</if>
+			<if test="area2_num!=0">
+				AND AREA2_NUM = #{area2_num}
+			</if>
+			<if test="category1_num!=0">
+				AND CATEGORY1_NUM = #{category1_num}
+			</if>
+			<if test="category2_num!=0">
+				AND CATEGORY2_NUM = #{category2_num}
+			</if>
+			<if
+				test="searchType=='title' and keyword != '' and keyword != null">
+				AND TITLE LIKE '%' || #{keyword} || '%'
+			</if>
+			<if
+				test="searchType=='content' and keyword != '' and keyword != null">
+				AND CONTENT LIKE '%' || #{keyword} || '%'
+			</if>
+			<if
+				test="searchType=='writer' and keyword != '' and keyword != null">
+				AND WRITER LIKE '%' || #{keyword} || '%'
+			</if>
+		</trim>
+	</select>
+	
+	<!-- 재능 상세 보기 -->
+	<select id="getTalent"
+		resultType="com.sku.jaebbom.talent.model.TalentViewVO"
+		parameterType="com.sku.jaebbom.talent.model.TalentViewVO">
+		SELECT
+		*
+		FROM
+		TALENT_VIEW
+		WHERE TALENT_NUM = #{talent_num}
+	</select>
+
+	<!-- 재능 등록 -->
+	<insert id="insertTalent"
+		parameterType="com.sku.jaebbom.talent.model.TalentVO">
+		INSERT
+		INTO TALENT (
+		TALENT_NUM, TALENT_CATEGORY1_NUM, TALENT_CATEGORY2_NUM, AREA1, AREA2,
+		TITLE, WRITER, MATCHING_STATUS, CONTENT, DAYTIME, PAY, WRITEDATE, AREA_DETAIL
+		)
+		VALUES(
+		TALENT_SEQ_.NEXTVAL,
+		#{talent_category1_num},
+		#{talent_category2_num},
+		#{area1},
+		#{area2},
+		#{title},
+		#{writer},
+		'TRUE',
+		#{content},
+		#{daytime},
+		#{pay},
+		TO_DATE(SYSDATE ,'yyyy.mm.dd hh24:mi'),
+		#{area_detail}
+		)
+	</insert>
+	
+	<!-- 재능 변경 -->
+	<update id="updateTalent"
+		parameterType="com.sku.jaebbom.talent.model.TalentVO">
+		UPDATE
+		TALENT SET
+		TITLE = #{title},
+		AREA1 = #{area1},
+		AREA2 = #{area2},
+		AREA_DETAIL = #{area_detail},
+		CONTENT = #{content},
+		DAYTIME = #{daytime},
+		PAY = #{pay}
+		WHERE
+		TALENT_NUM = #{talent_num}
+	</update>
+
+	<!-- 재능 삭제 -->
+	<delete id="deleteTalent" parameterType="int">
+		DELETE
+		FROM TALENT
+		WHERE
+		TALENT_NUM = #{talent_num}
+	</delete>
+
+</mapper>
