@@ -27,7 +27,9 @@ public class ChatController {
 	@RequestMapping(value = "/chat.do", method = RequestMethod.GET)
 	public String chatPage(HttpServletRequest request, HttpServletResponse response, Model model,
 			HttpSession session, @RequestParam("talent_num") int talent_num) throws Exception {
+		
 		UserVO user = (UserVO) session.getAttribute("login");
+		System.out.print(user.toString());
 		
 		model.addAttribute("talent", talentService.getTalent(talent_num));
 		model.addAttribute("user", user);

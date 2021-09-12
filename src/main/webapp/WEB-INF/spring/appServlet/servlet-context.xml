@@ -61,13 +61,13 @@
 
 	<!-- 채팅 -->
 
-	<websocket:handlers allowed-origins="*">
+	<websocket:handlers allowed-origins="*, http://localhost:8081">
 		<websocket:mapping handler="ChatHandler"
 			path="/chat" />
-		<websocket:handshake-interceptors>
-			<beans:bean class="com.sku.jaebbom.chat.ChatHandshakeInterceptor" />
-		</websocket:handshake-interceptors>
-		<websocket:sockjs websocket-enabled="true" />
+			<websocket:handshake-interceptors>
+				<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
+			</websocket:handshake-interceptors>
+		<websocket:sockjs />
 	</websocket:handlers>
 	<beans:bean id="ChatHandler" class="com.sku.jaebbom.chat.ChatHandler" />
 

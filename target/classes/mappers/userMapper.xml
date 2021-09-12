@@ -29,7 +29,7 @@
 		SELECT
 		CAREER_NAME, ETC_CAREER
 		FROM
-		CAREER where REGISTRAR_NUM = #{user_num}
+		CAREER where REGISTERED_NUM = #{user_num}
 	</select>
 
 	<!-- 로그인 -->
@@ -144,6 +144,20 @@
 		INTO user1( univ, major, school_year)
 		VALUES
 		(#{univ}, #{major}, #{school_year})
+	</insert>
+	
+	<!-- 경력 등록 -->
+	<insert id="insertCareer"
+		parameterType="com.sku.jaebbom.user.model.UserVO">
+		INSERT
+			INTO CAREER(CAREER_NUM, REGISTERED_NUM, CAREER_NAME, CAREER_PHOTO)
+		VALUES
+		(
+			CAREER_SEQ_NEXTVAL,
+			#{user_id},
+			#{career_name}, 
+			#{career_photo}
+		)
 	</insert>
 
 </mapper>

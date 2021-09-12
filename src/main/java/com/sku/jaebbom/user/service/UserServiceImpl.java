@@ -103,4 +103,9 @@ public class UserServiceImpl implements UserService{
 	public int regUnivInfo(UserVO userVO) throws Exception {
 		return userDao.regUnivInfo(userVO);
 	}
+	@Override
+	public int insertCareer(UserVO userVO) {
+		return userDao.insertCareer(userVO);
+		
+	}
 }

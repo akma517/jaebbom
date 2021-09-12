@@ -58,4 +58,7 @@ public interface UserService {
    	
    	// 대학 정보 등록
    	public int regUnivInfo(UserVO userVO)throws Exception;
+
+   	// 자격 및 경력 등록
+	public int insertCareer(UserVO userVO);
 }

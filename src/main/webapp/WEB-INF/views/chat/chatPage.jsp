@@ -15,8 +15,9 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 <script type="text/javascript">
-
+		
 		// 상대방 신고
 		function fn_report_talent(talent_num){
 			let url = "${pageContext.request.contextPath}/reportPage.do";
@@ -24,6 +25,18 @@
 			let newWin = window.open(url);
 			newWin.focus();
 		}
+		
+		// 엔터키로 채팅 보내기
+		$(document).ready(function() {
+            $("#message").keydown(function(key) {
+                //키의 코드가 13번일 경우 (엔터키일 경우)
+                if (key.keyCode == 13) {
+                	webSocket.sendChat('<c:out value="${user.nickname}" />');
+                }
+            });
+    		
+        });
+		
 
 		// 채팅을 위한 웹 소켓
 		var webSocket = {
@@ -31,29 +44,33 @@
 				this._url = param.url;
 				this._initSocket();
 			},
-			sendChat: function() {
-				this._sendMessage($('#message').val());
+			sendChat: function(user_nickname) {
+				this._sendMessage(user_nickname,$('#message').val());
 				$('#message').val('');
 			},
 			receiveMessage: function(strObj) {
-				let a = true	// 유저 구분 테스트를 위한 값 (의미 없음) (나중에 기능 성공하면 지움)
+				let chat = strObj.split("\n",2);	// 유저 구분 테스트를 위한 값 (의미 없음) (나중에 기능 성공하면 지움)
 				
-				console.log(strObj);
+				console.log(chat);
 				
-				if (a==true){
-					$('.div-block-4').append('<div class="userblock">');
-					$('.div-block-4').append('<div class="userchatname"></div>');
-					$('.div-block-4').append('<div class="userchat">' + strObj + '</div>');
-					$('.div-block-4').append('</div>');
+				if (chat[0]=='${user.nickname}'){
+					$('.div-block-4_message').append('<div class="userblock">');
+					$('.div-block-4_message').append('<div class="userchatname">' + chat[0] + '</div>');
+					$('.div-block-4_message').append('<div class="userchat">' + chat[1] + '</div>');
+					$('.div-block-4_message').append('</div>');
 				} else{
-					$('.div-block-4').append('<div class="providerblock">');
-					$('.div-block-4').append('<div class="providerchatname">${talent.writer}</div>');
-					$('.div-block-4').append('<div class="providerchat">' + strObj + '</div>');
-					$('.div-block-4').append('</div>');
+					$('.div-block-4_message').append('<div class="providerblock">');
+					$('.div-block-4_message').append('<div class="providerchatname">'+ chat[0] +'</div>');
+					$('.div-block-4_message').append('<div class="providerchat">' + chat[1] + '</div>');
+					$('.div-block-4_message').append('</div>');
 				}
+				
+            	// 자동 스크롤 다운
+            	$('.div-block-4_message').scrollTop($('.div-block-4_message')[0].scrollHeight);
+            	
 			},
 			closeMessage: function(str) {
-				$('.div-block-4').append('<div>' + '연결 끊김 : ' + str + '</div>');
+				$('.div-block-4_message').append('<div>' + '연결 끊김 : ' + str + '</div>');
 			},
 			disconnect: function() {
 				this._socket.close();
@@ -67,10 +84,11 @@
 					webSocket.closeMessage(evt.data);
 				}
 			},
-			_sendMessage: function(str) {
-				this._socket.send(str);
+			_sendMessage: function(user_nickname,str) {
+				this._socket.send(user_nickname + "\n" +str);
 			}
 		};
+		
 	</script>
 <script type="text/javascript">
 		$(document).ready(function() {
@@ -80,7 +98,43 @@
 	<style>
 		.searchservicblock {margin-top:10px; align-items: flex-end;}
 		.searchservicebutten w-button {margin-top: 5px; margin-bottom: 5px;}
-		.div-block-4 {min-height: 400px; min-width: 500px;}
+		.div-block-4 {
+			min-height: 400px;
+			min-width: 500px;
+			max-height: 500px;
+			max-width: 500px;
+		}
+		.div-block-4_message {
+			min-height: 380px;
+			min-width: 480px;
+			max-height: 480px;
+			max-width: 480px;
+		 	overflow-y:scroll;
+		 	display: -webkit-box;
+    		display: -webkit-flex;
+   			display: -ms-flexbox;
+    		display: flex;
+    		-webkit-box-orient: vertical;
+    		-webkit-box-direction: normal;
+    		-webkit-flex-direction: column;
+    		-ms-flex-direction: column;
+    		flex-direction: column;
+    		-webkit-box-pack: start;
+    		-webkit-justify-content: flex-start;
+    		-ms-flex-pack: start;
+    		justify-content: flex-start;
+    		-webkit-box-align: stretch;
+    		-webkit-align-items: stretch;
+    		-ms-flex-align: stretch;
+    		align-items: stretch;
+    		-webkit-box-flex: 1;
+    		-webkit-flex: 1;
+    		-ms-flex: 1;
+    		flex: 1;
+		}
+		::-webkit-scrollbar {
+  			display: none;
+		}
 	</style>
 </head>
 <body class="body">
@@ -118,19 +172,21 @@
 			<div id="wf-form-Contact-Form" name="wf-form-Contact-Form"
 				data-name="Contact Form">
 				<div class="contact-form-grid-2">
-					<div id="w-node-_0dae6e95-b8b3-bce9-d7bd-afa0b26382c7-aaedb22f"
+					<div id="w-node-_0dae6e95-b8b3-bce9-d7bd-afa0b26382c7-aaedb22f" name="chat_block"
 						class="div-block-4">
 						<h1 class="heading-6">${talent.writer}</h1>
+						<div class="div-block-4_message">
 						<div class="providerblock">
 							<div class="providerchatname">${talent.writer}</div>
 							<div class="providerchat">가능합니다. 시간대는 언제가 편하신가요?</div>
+						</div>
 						</div>
 					</div>
 					<div class="searchservicblock" >
 						<input type="text" id="message" class="searchserviceinput w-input"
 							maxlength="256" name="message" autocomplete="off" />
-						<button name="bt" class="searchservicebutten w-button"
-							onclick="webSocket.sendChat()">전송</button>
+						<button name="bt" class="searchservicebutten w-button" id="chat_send_button"
+							onclick="webSocket.sendChat('<c:out value="${user.nickname}" />')">전송</button>
 					</div>
 				</div>
 			</div>

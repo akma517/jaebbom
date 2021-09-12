@@ -46,12 +46,16 @@
 			</c:when>
 			<c:otherwise>
 				<div class="container-5 w-container">
+					<a href="${pageContext.request.contextPath}/talent/talentRegPage.do"
+						class="regist w-button"> <strong>재능 등록하기</strong></a> 
+					<a href="${pageContext.request.contextPath}/notice/noticeRegPage.do"
+						class="regist w-button"> <strong>공지사항 등록하기</strong></a> 
+					<a href="#" class="button-7 w-button"> <strong class="bold-text-4">등록한 재능</strong></a> 
+					<a href="#" class="button-7 w-button"> <strongclass="bold-text-4">이용 중인 재능</strong></a>
 					<a href="${pageContext.request.contextPath}/user/myPage.do"
-						class="button-6 w-button"> <strong class="bold-text-2">마이페이지</strong>
-					</a> 
+						class="button-6 w-button"> <strong class="bold-text-2">마이페이지</strong></a> 
 					<a href="${pageContext.request.contextPath}/user/logout.do"
-						class="button-5 w-button"> <strong class="bold-text">로그아웃</strong>
-					</a>
+						class="button-5 w-button"> <strong class="bold-text">로그아웃</strong></a>
 				</div>
 			</c:otherwise>
 		</c:choose>

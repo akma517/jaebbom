@@ -550,4 +550,27 @@ public class UserController {
 		return "user/careerRegPage";
 	}
     
+	/**
+	* 아직 미완성, 파일 업로드 관련 기능만 처리하면 완성
+	*/
+    @RequestMapping(value="/regCareer.do", method= RequestMethod.POST)
+	public String regCareer(Model model, HttpSession session, @RequestParam("career_nam") String career_name,
+			@RequestParam("career_photo") String career_photo, HttpServletRequest request) throws Exception{
+		
+		UserVO user = (UserVO) session.getAttribute("login");
+		String user_id = user.getUser_id();
+		
+		UserVO career_user = new UserVO();
+		
+		career_user.setUser_id(user_id);
+		career_user.setCareer_name(career_name);
+		career_user.setCareer_photo(career_photo);
+		
+		userService.insertCareer(career_user);
+		
+		model.addAttribute("userInfo", userService.getUserInfo(user_id));
+		model.addAttribute("userVO",new UserVO());
+		return "user/myPage";
+	}
+    
 }

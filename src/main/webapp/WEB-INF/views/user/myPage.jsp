@@ -13,19 +13,49 @@
 <link
 	href="${pageContext.request.contextPath}/resources/css/jaebbom.css"
 	rel="stylesheet" type="text/css" />
+<style>
+	.hoverButton {
+		text-decoration: none;
+		color: black;
+	}
+
+	.hoverButton:hover {
+		color: violet;
+	}
+</style>
 </head>
 <body class="body">
 	<header id="FrontBar" class="frontbar">
-		<a href="${pageContext.request.contextPath}/"
-			class="button-21 w-button"> <strong> <em
-				class="italic-text-2">재뿜</em>
-		</strong>
+		<a href="${pageContext.request.contextPath}" class="button-21 w-button w--current"> 
+			<strong> 
+				<em class="italic-text-2">재뿜</em>
+			</strong>
 		</a>
-		<div class="container-5 w-container">
-			<a href="${pageContext.request.contextPath}/user/logout.do"
-				class="button-5 w-button"> <strong class="bold-text">로그아웃</strong>
-			</a>
-		</div>
+		<c:choose>
+			<c:when test="${sessionScope.login == null}">
+				<div class="container-5 w-container">
+					<a href="${pageContext.request.contextPath}/user/loginPage.do"class="button-6 w-button">
+						<strong class="bold-text-2">로그인</strong>
+					</a> <a href="${pageContext.request.contextPath}/user/joinPage.do"class="button-5 w-button">
+						<strong class="bold-text">회원가입</strong>
+					</a>
+				</div>
+			</c:when>
+			<c:otherwise>
+				<div class="container-5 w-container">
+					<a href="${pageContext.request.contextPath}/talent/talentRegPage.do"
+						class="regist w-button"> <strong>재능 등록하기</strong></a> 
+					<a href="${pageContext.request.contextPath}/notice/noticeRegPage.do"
+						class="regist w-button"> <strong>공지사항 등록하기</strong></a> 
+					<a href="#" class="button-7 w-button"> <strong class="bold-text-4">등록한 재능</strong></a> 
+					<a href="#" class="button-7 w-button"> <strongclass="bold-text-4">이용 중인 재능</strong></a>
+					<a href="${pageContext.request.contextPath}/user/myPage.do"
+						class="button-6 w-button"> <strong class="bold-text-2">마이페이지</strong></a> 
+					<a href="${pageContext.request.contextPath}/user/logout.do"
+						class="button-5 w-button"> <strong class="bold-text">로그아웃</strong></a>
+				</div>
+			</c:otherwise>
+		</c:choose>
 	</header>
 	<section id="contact-form" class="contact-form-2">
 		<h2 class="mypagehead">마이페이지</h2>
@@ -109,7 +139,10 @@
 									<h1 class="heading-6">등록한 서비스</h1>
 									<ul role="list" class="useservicelist">
 										<c:forEach var="TalentList" items="${registeredTalent}">
-											<li class="list-item-3">${TalentList.title}</li>
+											<a href="${pageContext.request.contextPath}/talent/talentPage.do?talent_num=${TalentList.talent_num}"
+											class="hoverButton" >
+												<li class="list-item-3">${TalentList.title}</li>
+											</a>
 										</c:forEach>
 									</ul>
 								</div>
@@ -117,11 +150,11 @@
 						</div>
 						<div id="w-node-be1ad685-51ef-57c2-9ab3-9c8cfdb80721-b15bc5d3"
 							class="div-block-4">
-							<h1 class="heading-6">경력</h1>
+							<h1 class="heading-6">자격 및 경력</h1>
 							<div class="w-layout-grid grid-3">
 								<div class="textofcaree">자격증:</div>
 								<div class="career">${userCareer.career_name}</div>
-								<div class="textofcaree">기타:</div>
+								<div class="textofcaree">경력:</div>
 								<div class="career">${userCareer.etc_career}</div>
 							</div>
 							<div class="careerbuttenblock">

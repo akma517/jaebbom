@@ -24,30 +24,35 @@ public class ChatHandler extends TextWebSocketHandler {
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		// 채팅방에 접속 한 사용자 세션을 리스트에 저장
+		
 		sessionList.add(session);
 
-		super.afterConnectionEstablished(session);
+		//super.afterConnectionEstablished(session);
 		
-		for (int i = 0; i < sessionList.size(); i++) {
-			WebSocketSession s = sessionList.get(i);
-			Map<String, Object> map = s.getAttributes();
-			System.out.println(map.values());
-		}
+		//for (int i = 0; i < sessionList.size(); i++) {
+			//WebSocketSession s = sessionList.get(i);
+			//Map<String, Object> map = s.getAttributes();
+			//System.out.println(map.values());
+		//}
 	}
 	
 	// 클라이언트에서 서버로의 연결 끊음을 처리
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		// 채팅방에서 퇴장한 사용자 세션을 리스트에서 제거
-		sessionList.remove(session);
-		
+		System.out.println("연결이 끊어짐");
 		// 모든 세션에 채팅 전달
-		for (int i = 0; i < sessionList.size(); i++) {
+/*		for (int i = 0; i < sessionList.size(); i++) {
 			WebSocketSession s = sessionList.get(i);
 			Map<String, Object> map = s.getAttributes();
 			String nickname = (String)map.get("nickname");
 			s.sendMessage(new TextMessage("퇴장하였습니다."));
+		}*/
+		for (WebSocketSession s : sessionList) {
+			s.sendMessage(new TextMessage("상대방이 퇴장하였습니다."));
 		}
+		
+		sessionList.remove(session);
 	}
 	
 	// 클라이언트에서 버로 메세지 전송 처리
@@ -55,8 +60,7 @@ public class ChatHandler extends TextWebSocketHandler {
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		
 		// 모든 세션에 채팅 전달
-		for (int i = 0; i < sessionList.size(); i++) {
-			WebSocketSession s = sessionList.get(i);
+		for (WebSocketSession s : sessionList) {
 			s.sendMessage(new TextMessage(message.getPayload()));
 		}
 	}	

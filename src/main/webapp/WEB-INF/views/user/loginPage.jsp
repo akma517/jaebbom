@@ -11,14 +11,6 @@
 <link
 	href="${pageContext.request.contextPath}/resources/css/jaebbom.css"
 	rel="stylesheet" type="text/css" />
-<!--  <script>
-    $(document).on('click', '#logindoit', function(e){
-    	System.out.println("로그인 시시작");
-		e.preventDefault();
-		$("#1qaz").submit();
-		location.href="${pageContext.request.contextPath}";
-	});
-</script>-->
 </head>
 <body class="body-2">
 	<header id="FrontBar" class="frontbar">
@@ -28,7 +20,6 @@
 		</strong>
 		</a>
 		<div class="container-5 w-container">
-
 		</div>
 	</header>
 	<div class="form-block w-form">

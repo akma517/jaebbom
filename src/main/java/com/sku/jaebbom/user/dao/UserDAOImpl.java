@@ -87,6 +87,10 @@ public class UserDAOImpl implements UserDAO{
 	public int regUnivInfo(UserVO userVO) throws Exception {
 		return sqlSession.insert(namespace+".regUnivInfo", userVO);
 	}
+	@Override
+	public int insertCareer(UserVO userVO) {
+		return sqlSession.insert(namespace+".insertCareer", userVO );
+	}
 	
 	
 	
