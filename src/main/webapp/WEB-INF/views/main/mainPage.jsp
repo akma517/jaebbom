@@ -19,24 +19,31 @@
 }
 </style>
 <body class="body">
-	<header id="FrontBar" class="frontbar">
-		<a href="${pageContext.request.contextPath}" class="button-21 w-button w--current"> 
-			<strong> 
-				<em class="italic-text-2">재뿜</em>
-			</strong>
-		</a>
-		<c:choose>
-			<c:when test="${sessionScope.login == null}">
+	<c:choose>
+		<c:when test="${sessionScope.login == null}">	
+			<header id="FrontBar" class="frontbar">
 				<div class="container-5 w-container">
+					<a href="${pageContext.request.contextPath}" class="button-21 w-button w--current"> 
+						<strong> 
+							<em class="italic-text-2">재뿜</em>
+						</strong>
+					</a>
 					<a href="${pageContext.request.contextPath}/user/loginPage.do"class="button-6 w-button">
 						<strong class="bold-text-2">로그인</strong>
 					</a> <a href="${pageContext.request.contextPath}/user/joinPage.do"class="button-5 w-button">
 						<strong class="bold-text">회원가입</strong>
 					</a>
 				</div>
+			</header>
 			</c:when>
-			<c:otherwise>
+		<c:otherwise>
+			<header id="FrontBar" class="frontbar">	
 				<div class="container-5 w-container">
+					<a href="${pageContext.request.contextPath}" class="button-21 w-button w--current"> 
+						<strong> 
+							<em class="italic-text-2">재뿜</em>
+						</strong>
+					</a>
 				<%-- 
 					<a href="${pageContext.request.contextPath}/talent/talentRegPage.do"
 						class="regist w-button"> <strong>재능 등록하기</strong></a> 
@@ -50,9 +57,9 @@
 					<a href="${pageContext.request.contextPath}/user/logout.do"
 						class="button-5 w-button"> <strong class="bold-text">로그아웃</strong></a>
 				</div>
-			</c:otherwise>
-		</c:choose>
-	</header>
+			</header>
+		</c:otherwise>
+	</c:choose>
 	<div id="hero-overlay" class="hero-overlay">
 		<div class="centered-container w-container">
 			<h1 class="heading-2">다양한 재능을 이용하세요</h1>

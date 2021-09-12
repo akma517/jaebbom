@@ -57,12 +57,6 @@
 							data-wait="Please wait..." class="repwbutten w-button" />
 					</div>
 				</form>
-				<div class="w-form-done">
-					<div>Thank you! Your submission has been received!</div>
-				</div>
-				<div class="w-form-fail">
-					<div>Oops! Something went wrong while submitting the form.</div>
-				</div>
 			</div>
 		</div>
 		<a href="${pageContext.request.contextPath}/"
