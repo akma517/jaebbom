@@ -74,38 +74,6 @@
 	</style>
 </head>
 <body class="body">
-	<header id="FrontBar" class="frontbar">
-		<a href="${pageContext.request.contextPath}" class="button-21 w-button w--current"> 
-			<strong> 
-				<em class="italic-text-2">재뿜</em>
-			</strong>
-		</a>
-		<c:choose>
-			<c:when test="${sessionScope.login == null}">
-				<div class="container-5 w-container">
-					<a href="${pageContext.request.contextPath}/user/loginPage.do"class="button-6 w-button">
-						<strong class="bold-text-2">로그인</strong>
-					</a> <a href="${pageContext.request.contextPath}/user/joinPage.do"class="button-5 w-button">
-						<strong class="bold-text">회원가입</strong>
-					</a>
-				</div>
-			</c:when>
-			<c:otherwise>
-				<div class="container-5 w-container">
-					<a href="${pageContext.request.contextPath}/talent/talentRegPage.do"
-						class="regist w-button"> <strong>재능 등록하기</strong></a> 
-					<a href="${pageContext.request.contextPath}/notice/noticeRegPage.do"
-						class="regist w-button"> <strong>공지사항 등록하기</strong></a> 
-					<a href="#" class="button-7 w-button"> <strong class="bold-text-4">등록한 재능</strong></a> 
-					<a href="#" class="button-7 w-button"> <strongclass="bold-text-4">이용 중인 재능</strong></a>
-					<a href="${pageContext.request.contextPath}/user/myPage.do"
-						class="button-6 w-button"> <strong class="bold-text-2">마이페이지</strong></a> 
-					<a href="${pageContext.request.contextPath}/user/logout.do"
-						class="button-5 w-button"> <strong class="bold-text">로그아웃</strong></a>
-				</div>
-			</c:otherwise>
-		</c:choose>
-	</header>
 <section id="contact-form">
     <div class="container-2 w-container">
         <h2 class="heading-13">자격 및 경력 등록</h2>
@@ -116,7 +84,7 @@
         </p>
         <div class="joinfromblock w-form">
             <form id="wf-form-Contact-Form" name="wf-form-Contact-Form"  class="careerform" method="post"
-            action="${pageContext.request.contextPath}/user/regCareer.do">>
+            action="${pageContext.request.contextPath}/user/regCareer.do" enctype="multipart/form-data">
                 <div class="careerblock">
                     <div class="careerblockofblock">
                         <label for="career" id="contact-first-name" class="careerlabel">자격 및 경력</label>
@@ -125,7 +93,7 @@
                 </div>
                 <div class="careerImage">
                     <label for="careerImages" id="contact-careerCard" class="detache w-button">사진 업로드</label>
-                    <input type="file" class="careerImages" id="careerImages" style={{display:none}} name='career_photo'/>
+                    <input type="file" class="careerImages" id="careerImages" style={{display:none}} name='file'/>
                 </div>
                 <div class="carrersubmitblock">
                     <input type="submit" value="제출" class="carrersubmit w-button"/>

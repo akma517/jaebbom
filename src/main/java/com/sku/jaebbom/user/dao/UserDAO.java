@@ -35,7 +35,7 @@ public interface UserDAO {
 	/**
 	 * 회원 경력정보열람 기능
 	 * */
-	public UserVO getUserCareer(int user_num)throws Exception;
+	public List<String> getUserCareer(int user_num)throws Exception;
 	/**
 	 * 회원 작성한 글 열람 기능
 	 * */

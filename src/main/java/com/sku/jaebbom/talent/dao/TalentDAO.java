@@ -18,6 +18,10 @@ public interface TalentDAO {
 	public int updateTalent(TalentVO talentVO) throws Exception;
 	public int deleteTalent(int talent_num) throws Exception;
 	public int getTalentListCnt(Search search) throws Exception;
+	public List<String> getCategoryListBig()  throws Exception;
+	public List<String> getCategoryListSmall()  throws Exception;
+	public List<String> getAddressListBig()  throws Exception;
+	public List<String> getAddressListSmall()  throws Exception;
 	
 	// 리뷰 메소드입니다.
 	public List<ReviewVO> getReviewList(Paging_re paging) throws Exception;

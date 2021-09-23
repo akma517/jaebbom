@@ -50,8 +50,8 @@ public class UserDAOImpl implements UserDAO{
 		return sqlSession.selectOne(namespace+".getUserUniv",  user_id);
 	}
 	@Override
-	public UserVO getUserCareer(int user_num) throws Exception {
-		return sqlSession.selectOne(namespace+".getUserCareer",  user_num);
+	public List<String> getUserCareer(int user_num) throws Exception {
+		return sqlSession.selectList(namespace+".getUserCareer",  user_num);
 	}
 	@Override
 	public List<TalentVO> getregisteredTalent(int user_num) throws Exception {

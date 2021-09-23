@@ -158,20 +158,15 @@
 						<div id="w-node-be1ad685-51ef-57c2-9ab3-9c8cfdb80721-b15bc5d3"
 							class="div-block-4">
 							<h1 class="heading-6">자격 및 경력</h1>
-							<div class="w-layout-grid grid-3">
-								<div class="textofcaree">자격증:</div>
-								<div class="career">${userCareer.career_name}</div>
-								<div class="textofcaree">경력:</div>
-								<div class="career">${userCareer.etc_career}</div>
-							</div>
+							<ul role="list" class="useservicelist">
+								<c:forEach var="userCareerListItem" items="${userCareerList}">
+									<li class="list-item-3">${userCareerListItem}</li>
+								</c:forEach>
+							</ul>
 							<div class="careerbuttenblock">
-								<a
-									href="${pageContext.request.contextPath}/user/careerRegPage.do"
-									target="_blank" class="docareer w-button"> <strong>경력
-										등록</strong>
-								</a> <a href="#" class="managecareer w-button"> <strong>경력
-										정보 변경</strong>
-								</a>
+								<a href="${pageContext.request.contextPath}/user/careerRegPage.do" target="_blank" class="docareer w-button"> 
+									<strong>경력 등록</strong>
+								</a> 
 							</div>
 						</div>
 					</div>

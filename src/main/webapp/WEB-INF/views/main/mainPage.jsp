@@ -19,6 +19,7 @@
 }
 </style>
 <body class="body">
+	<div>
 	<c:choose>
 		<c:when test="${sessionScope.login == null}">	
 			<header id="FrontBar" class="frontbar">
@@ -60,6 +61,7 @@
 			</header>
 		</c:otherwise>
 	</c:choose>
+	</div>
 	<div id="hero-overlay" class="hero-overlay">
 		<div class="centered-container w-container">
 			<h1 class="heading-2">다양한 재능을 이용하세요</h1>

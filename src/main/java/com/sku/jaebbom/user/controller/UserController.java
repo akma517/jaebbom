@@ -2,6 +2,10 @@ package com.sku.jaebbom.user.controller;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.regex.Matcher;
@@ -107,9 +111,9 @@ public class UserController {
 	@ResponseBody
 	public String NickNameChkPOST(String nickname) throws Exception{
 				
-		System.out.println("닉넴 진입");
+		System.out.println("닉네임 진입");
 		int result = userService.nickCheck(nickname);
-		System.out.println("닉넴 결과값 = " + result);
+		System.out.println("닉네임 결과값 = " + result);
 		if(result != 0) {
 			return "fail";	// 중복 닉네임 존재
 		} else {
@@ -192,8 +196,7 @@ public class UserController {
 		model.addAttribute("userInfo", vo1);
 		UserVO vo2 = userService.getUserUniv(user_id);
 		model.addAttribute("userUniv", vo2);
-		UserVO vo3 = userService.getUserCareer(user_num);
-		model.addAttribute("userCareer", vo3);
+		model.addAttribute("userCareerList", userService.getUserCareer(user_num));
 		List<TalentVO> vo4 = userService.getregisteredTalent(user_num);
 		model.addAttribute("registeredTalent", vo4);
 		return "user/myPage";
@@ -234,8 +237,7 @@ public class UserController {
 		model.addAttribute("userInfo", vo1);
 		UserVO vo2 = userService.getUserUniv(user_id);
 		model.addAttribute("userUniv", vo2);
-		UserVO vo3 = userService.getUserCareer(user_num);
-		model.addAttribute("userCareer", vo3);
+		model.addAttribute("userCareerList", userService.getUserCareer(user_num));
 		List<TalentVO> vo4 = userService.getregisteredTalent(user_num);
 		model.addAttribute("registeredTalent", vo4);
 		return "user/myPage";
@@ -410,8 +412,7 @@ public class UserController {
 			model.addAttribute("userInfo", vo1);
 			UserVO vo2 = userService.getUserUniv(user_id);
 			model.addAttribute("userUniv", vo2);
-			UserVO vo3 = userService.getUserCareer(user_num);
-			model.addAttribute("userCareer", vo3);
+			model.addAttribute("userCareerList", userService.getUserCareer(user_num));
 			List<TalentVO> vo4 = userService.getregisteredTalent(user_num);
 			model.addAttribute("registeredTalent", vo4);
 			return "user/myPage";
@@ -531,8 +532,7 @@ public class UserController {
 		model.addAttribute("userInfo", vo1);
 		UserVO vo2 = userService.getUserUniv(user_id);
 		model.addAttribute("userUniv", vo2);
-		UserVO vo3 = userService.getUserCareer(user_num);
-		model.addAttribute("userCareer", vo3);
+		model.addAttribute("userCareerList", userService.getUserCareer(user_num));
 		List<TalentVO> vo4 = userService.getregisteredTalent(user_num);
 		model.addAttribute("registeredTalent", vo4);
 		return "user/myPage";
@@ -554,22 +554,50 @@ public class UserController {
 	* 아직 미완성, 파일 업로드 관련 기능만 처리하면 완성
 	*/
     @RequestMapping(value="/regCareer.do", method= RequestMethod.POST)
-	public String regCareer(Model model, HttpSession session, @RequestParam("career_nam") String career_name,
-			@RequestParam("career_photo") String career_photo, HttpServletRequest request) throws Exception{
+	public String regCareer(Model model, HttpSession session, @RequestParam("career_name") String career_name,
+			MultipartFile file ,HttpServletRequest request, HttpServletResponse response) throws Exception{
 		
 		UserVO user = (UserVO) session.getAttribute("login");
 		String user_id = user.getUser_id();
+
+		// 업로드 파일 저장 경로
+		String uploadPath = request.getSession().getServletContext().getRealPath("resources/uploads/careerfile");
 		
-		UserVO career_user = new UserVO();
+		// 이름 중복을 방지하기 위해 현재 시각(년월일 포함)을 파일 이름 앞에 붙임
+		LocalDateTime now = LocalDateTime.now();
+		String formatedNow = now.format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분 ss초"));
+		String fileName = formatedNow + file.getOriginalFilename();
+		File target = new File(uploadPath, fileName);
 		
-		career_user.setUser_id(user_id);
+        //경로 확인 및 생성
+        if ( !new File(uploadPath).exists()) {
+            new File(uploadPath).mkdirs();
+        }
+		
+        //파일경로에 파일복사
+        try {
+            FileCopyUtils.copy(file.getBytes(), target);
+        
+        //에러시 
+        } catch(Exception e) { 	
+            e.printStackTrace();
+        }
+        
+		// 경력 등록을 위한 회원 정보 가져오기
+		UserVO career_user = userService.getUserInfo(user_id);
+        
 		career_user.setCareer_name(career_name);
-		career_user.setCareer_photo(career_photo);
+		career_user.setCareer_photo(fileName);
 		
 		userService.insertCareer(career_user);
 		
-		model.addAttribute("userInfo", userService.getUserInfo(user_id));
-		model.addAttribute("userVO",new UserVO());
+		model.addAttribute("userInfo", career_user);
+		
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter response1 = response.getWriter();
+		response1.println("<script>alert('경력을 등록하였습니다.');</script>");
+		response1.flush();
+		
 		return "user/myPage";
 	}
     

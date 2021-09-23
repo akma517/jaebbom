@@ -71,6 +71,11 @@ public class TalentController {
 		
 		model.addAttribute("talentList", talentService.getTalentList(search));
 		
+		model.addAttribute("categoryListBig", talentService.getCategoryListBig());
+		model.addAttribute("categoryListSmall", talentService.getCategoryListSmall());
+		model.addAttribute("addressListBig", talentService.getAddressListBig());
+		model.addAttribute("addressListSmall", talentService.getAddressListSmall());
+		
 		return "talent/talentListPage";
 	}
 	

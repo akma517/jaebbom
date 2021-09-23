@@ -59,6 +59,26 @@ public class TalentDAOImpl implements TalentDAO {
 		return sqlSession.selectOne(namespace + ".getTalentListCnt", search);
 	}
 	
+	@Override
+	public List<String> getAddressListBig() throws Exception {
+		return sqlSession.selectList(namespace + ".getAddressListBig");
+	}
+	
+	@Override
+	public List<String> getAddressListSmall() throws Exception {
+		return sqlSession.selectList(namespace + ".getAddressListSmall");
+	}
+	
+	@Override
+	public List<String> getCategoryListBig() throws Exception {
+		return sqlSession.selectList(namespace + ".getCategoryListBig");
+	}
+	
+	@Override
+	public List<String> getCategoryListSmall() throws Exception {
+		return sqlSession.selectList(namespace + ".getCategoryListSmall");
+	}
+	
 	/**
 	 * 테스트용 toString 메소드
 	 */
@@ -95,4 +115,6 @@ public class TalentDAOImpl implements TalentDAO {
 	public int getReviewListCnt(int talent_num) throws Exception {
 		return sqlSession.selectOne(namespace_re + ".getReviewListCnt", talent_num );
 	}
+	
+	
 }

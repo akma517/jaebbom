@@ -76,4 +76,26 @@ public class TalentServiceImpl implements TalentService{
 	public int updateReview(ReviewVO reviewVO) throws Exception {
 		return talentDAO.updateReview(reviewVO);
 	}
+	
+	@Override
+	public List<String> getAddressListBig() throws Exception {
+		return talentDAO.getAddressListBig();
+				
+	}
+	
+	@Override
+	public List<String> getAddressListSmall() throws Exception {
+		return talentDAO.getAddressListSmall();
+	}
+	
+	@Override
+	public List<String> getCategoryListBig() throws Exception {
+		return talentDAO.getCategoryListBig();
+	}
+	
+	@Override
+	public List<String> getCategoryListSmall() throws Exception {
+		return talentDAO.getCategoryListSmall();
+	}
+	
 }

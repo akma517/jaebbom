@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public UserVO getUserCareer(int user_num) throws Exception {
+	public List<String> getUserCareer(int user_num) throws Exception {
 		return userDao.getUserCareer(user_num);
 	}
 

@@ -31,7 +31,7 @@ public interface UserService {
     * */
    	public UserVO getUserInfo(String user_id)throws Exception;
    	public UserVO getUserUniv(String user_id)throws Exception;
-   	public UserVO getUserCareer(int user_num)throws Exception;
+   	public List<String> getUserCareer(int user_num)throws Exception;
    	public List<TalentVO> getregisteredTalent(int user_num) throws Exception;
    /**
     * 회원정보 수정

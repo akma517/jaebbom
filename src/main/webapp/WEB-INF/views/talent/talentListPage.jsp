@@ -6,6 +6,12 @@
 	//검색 키워드의 한글 깨짐 현상을 방지하고자 설정, tomcat의 server.xml또한 바꿔 줘야함 
 	//(서버 포트 번호와 동일한 포트 번호를 인자로 가지는 <connector> 태그에 URIEncoding="UTF-8"를 설정해야 함)
 	request.setCharacterEncoding("UTF-8");
+
+	// for each문으로 이름을 받고 벨류에는 넘버를 넣어야 하기에 따로 각 리스트마다 사용할 인덱스 변수를 초기화
+	int categoryListBigIndex = 1;
+	int categoryListSmallIndex = 1;
+	int addressListBigIndex = 1;
+	int addressListSmallIndex = 1;
 %>
 <!DOCTYPE html>
 <html>
@@ -209,9 +215,9 @@ ul {
 							id="category1_num" name="category1_num"
 							class="bigservicecategory w-select">
 							<option value="0">전체</option>
-							<option value="1">종류1</option>
-							<option value="2">종류2</option>
-							<option value="3">종류3</option>
+							<c:forEach var="categoryListBigItem" items="${categoryListBig}">
+								<option value="<%=categoryListBigIndex++ %>">${categoryListBigItem}</option>
+							</c:forEach>
 						</select>
 					</div>
 					<div class="category">
@@ -219,9 +225,9 @@ ul {
 							id="category2_num" name="category2_num"
 							class="smallservicecategory w-select">
 							<option value="0">전체</option>
-							<option value="1">상세 종류1</option>
-							<option value="2">상세 종류2</option>
-							<option value="3">상세 종류3</option>
+							<c:forEach var="categoryListSmallItem" items="${categoryListSmall}">
+								<option value="<%=categoryListSmallIndex++ %>">${categoryListSmallItem}</option>
+							</c:forEach>
 						</select>
 					</div>
 					<div class="category">
@@ -229,9 +235,9 @@ ul {
 							id="area1_num" name="area1_num"
 							class="bigaddresscategory w-select">
 							<option value="0">전체</option>
-							<option value="1">지역1</option>
-							<option value="2">지역2</option>
-							<option value="3">지역3</option>
+							<c:forEach var="addressListBigItem" items="${addressListBig}">
+								<option value="<%=addressListBigIndex++ %>">${addressListBigItem}</option>
+							</c:forEach>
 						</select>
 					</div>
 					<div class="category">
@@ -239,9 +245,9 @@ ul {
 							id="area2_num" name="area2_num"
 							class="smalladdresscategory w-select">
 							<option value="0">전체</option>
-							<option value="1">상세 지역1</option>
-							<option value="2">상세 지역2</option>
-							<option value="3">상세 지역3</option>
+							<c:forEach var="addressListSmallItem" items="${addressListSmall}">
+								<option value="<%=addressListSmallIndex++ %>">${addressListSmallItem}</option>
+							</c:forEach>
 						</select>
 					</div>
 					<div class="category">

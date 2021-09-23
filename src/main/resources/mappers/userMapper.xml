@@ -24,12 +24,11 @@
 		USER1 where USER_ID = #{user_id}
 	</select>
 	<!-- 자격증 열람 -->
-	<select id="getUserCareer"
-		resultType="com.sku.jaebbom.user.model.UserVO">
+	<select id="getUserCareer" resultType="String">
 		SELECT
-		CAREER_NAME, ETC_CAREER
+			CAREER_NAME
 		FROM
-		CAREER where REGISTERED_NUM = #{user_num}
+			CAREER where REGISTERED_NUM = #{user_num}
 	</select>
 
 	<!-- 로그인 -->
@@ -153,8 +152,8 @@
 			INTO CAREER(CAREER_NUM, REGISTERED_NUM, CAREER_NAME, CAREER_PHOTO)
 		VALUES
 		(
-			CAREER_SEQ_NEXTVAL,
-			#{user_id},
+			CAREER_SEQ_.NEXTVAL,
+			#{user_num},
 			#{career_name}, 
 			#{career_photo}
 		)
