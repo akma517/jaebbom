@@ -2,7 +2,12 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-
+<%
+	int categoryListBigIndex = 1;
+	int categoryListSmallIndex = 1;
+	int addressListBigIndex = 1;
+	int addressListSmallIndex = 1;
+%>
 
 <html>
 <head>
@@ -138,16 +143,16 @@
 									<form:select path="talent_category1_num" id="node" name="talent_category2_num" required=""
 										class="w-select">
 										<option value="">재능 종류</option>
-										<option value=1>1</option>
-										<option value=2>2</option>
-										<option value=3>3</option>
+										<c:forEach var="categoryListBigItem" items="${categoryListBig}">
+											<option value="<%=categoryListBigIndex++ %>">${categoryListBigItem}</option>
+										</c:forEach>
 									</form:select>
 									<form:select path="talent_category2_num" id="node-2" name="talent_category2_num"
 										class="w-select">
 										<option value="">재능 상세 종류</option>
-										<option value=1>1</option>
-										<option value=2>2</option>
-										<option value=3>3</option>
+										<c:forEach var="categoryListSmallItem" items="${categoryListSmall}">
+											<option value="<%=categoryListSmallIndex++ %>">${categoryListSmallItem}</option>
+										</c:forEach>
 									</form:select>
 								</div>
 							</div>
@@ -158,17 +163,17 @@
 								<div class="div-block-27">
 									<form:select path="area1" id="node" name="area1" required=""
 										class="w-select">
-										<option value="">주소1</option>
-										<option value=1>1</option>
-										<option value=2>2</option>
-										<option value=3>3</option>
+										<option value="">주소</option>
+										<c:forEach var="addressListBigItem" items="${addressListBig}">
+											<option value="<%=addressListBigIndex++ %>">${addressListBigItem}</option>
+										</c:forEach>	
 									</form:select>
 									<form:select path="area2" id="node-2" name="area2"
 										class="w-select">
-										<option value="">주소2</option>
-										<option value=1>1</option>
-										<option value=2>2</option>
-										<option value=3>3</option>
+										<option value="">상세 주소</option>
+										<c:forEach var="addressListSmallItem" items="${addressListSmall}">
+											<option value="<%=addressListSmallIndex++ %>">${addressListSmallItem}</option>
+										</c:forEach>
 									</form:select>
 								</div>
 								<div>

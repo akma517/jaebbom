@@ -81,14 +81,21 @@ public class TalentController {
 	
 	/**
 	 * 	재능 등록 페이지로 이동
+	 *
 	 */
 	@RequestMapping(value = "/talentRegPage.do", method = RequestMethod.GET)
-	public String talentRegPage(@ModelAttribute("talentVO") TalentVO talentVO, Model model,  HttpSession session) {
+	public String talentRegPage(@ModelAttribute("talentVO") TalentVO talentVO, Model model,  HttpSession session) throws Exception {
 		
 		UserVO user = (UserVO) session.getAttribute("login");
 		
 		model.addAttribute("user",user);
 		model.addAttribute("changedText", "등록");
+		
+		model.addAttribute("categoryListBig", talentService.getCategoryListBig());
+		model.addAttribute("categoryListSmall", talentService.getCategoryListSmall());
+		model.addAttribute("addressListBig", talentService.getAddressListBig());
+		model.addAttribute("addressListSmall", talentService.getAddressListSmall());
+		
 		return "talent/talentRegPage";
 	}
 
@@ -152,6 +159,12 @@ public class TalentController {
 		model.addAttribute("mode", mode);
 		model.addAttribute("talentVO", new TalentVO());
 		model.addAttribute("changedText", "수정");
+		
+		model.addAttribute("categoryListBig", talentService.getCategoryListBig());
+		model.addAttribute("categoryListSmall", talentService.getCategoryListSmall());
+		model.addAttribute("addressListBig", talentService.getAddressListBig());
+		model.addAttribute("addressListSmall", talentService.getAddressListSmall());
+		
 		return "talent/talentRegPage";
 	}
 

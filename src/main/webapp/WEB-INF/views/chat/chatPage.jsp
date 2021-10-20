@@ -172,14 +172,9 @@
 			<div id="wf-form-Contact-Form" name="wf-form-Contact-Form"
 				data-name="Contact Form">
 				<div class="contact-form-grid-2">
-					<div id="w-node-_0dae6e95-b8b3-bce9-d7bd-afa0b26382c7-aaedb22f" name="chat_block"
-						class="div-block-4">
+					<div id="w-node-_0dae6e95-b8b3-bce9-d7bd-afa0b26382c7-aaedb22f" name="chat_block" class="div-block-4">
 						<h1 class="heading-6">${talent.writer}</h1>
 						<div class="div-block-4_message">
-						<div class="providerblock">
-							<div class="providerchatname">${talent.writer}</div>
-							<div class="providerchat">가능합니다. 시간대는 언제가 편하신가요?</div>
-						</div>
 						</div>
 					</div>
 					<div class="searchservicblock" >
